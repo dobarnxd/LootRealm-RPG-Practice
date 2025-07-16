@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Engine.Models
         Rogue
     }
 
-    internal class Player
+    public class Player : INotifyPropertyChanged
     {
         private string _name;
         private readonly PlayerClass _characterClass;
@@ -22,6 +23,8 @@ namespace Engine.Models
         private uint _experiencePoints;
         private uint _level;
         private uint _gold;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public Player(string name, PlayerClass characterClass)
         {
@@ -82,6 +85,7 @@ namespace Engine.Models
             set
             {
                 _hitPoints = value;
+                OnPropertyChange("HitPoints");
             }
         }
 
@@ -94,6 +98,7 @@ namespace Engine.Models
             set
             {
                 _damage = value;
+                OnPropertyChange("Damage");
             }
         }
 
@@ -106,6 +111,7 @@ namespace Engine.Models
             set
             {
                 _experiencePoints = value;
+                OnPropertyChange("ExperiencePoints");
             }
         }
 
@@ -118,6 +124,7 @@ namespace Engine.Models
             set
             {
                 _level = value;
+                OnPropertyChange("Level");
             }
         }
 
@@ -130,7 +137,13 @@ namespace Engine.Models
             set
             {
                 _gold = value;
+                OnPropertyChange("Gold");
             }
+        }
+
+        protected virtual void OnPropertyChange(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
