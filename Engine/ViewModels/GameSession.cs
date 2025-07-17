@@ -10,10 +10,12 @@ namespace Engine.ViewModels
     public class GameSession
     {
         private Player _currentPlayer;
+        private Location _currentLocation;
 
         public GameSession()
         {
             _currentPlayer = new Player("Scott", PlayerClass.Warrior);
+            _currentLocation = new Location();
         }
 
         public Player CurrentPlayer
@@ -21,6 +23,14 @@ namespace Engine.ViewModels
             get
             {
                 return _currentPlayer;
+            }
+        }
+
+        public Location CurrentLocation
+        {
+            get
+            {
+                return _currentLocation;
             }
         }
     }
