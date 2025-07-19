@@ -10,3 +10,7 @@
 - Creating the GameSession (ViewModel) Class
 - Displaying the Player Object
 - Update Player data with the PropertyChanged event
+
+## Version 1.0.3 (2025-07-17)  
+- Creating the Location class
+- Displaying the current location

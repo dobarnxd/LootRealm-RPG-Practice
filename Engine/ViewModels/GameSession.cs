@@ -1,19 +1,70 @@
-﻿using System;
+﻿using Engine.Factories;
+using Engine.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Models;
 
 namespace Engine.ViewModels
 {
-    public class GameSession
+    public class GameSession : INotifyPropertyChanged
     {
         private Player _currentPlayer;
+        private Location _currentLocation;
+        private World _currentWorld;
+        private WorldFactory _newWorldFactory;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public GameSession()
         {
             _currentPlayer = new Player("Scott", PlayerClass.Warrior);
+            _newWorldFactory = new WorldFactory();
+            _currentWorld = _newWorldFactory.CreateWorld();
+            _currentLocation = _currentWorld.LocationAt(0, -1);
+        }
+
+        public void MovePlayer(int xCoordinate, int yCoordinate)
+        {
+            Location newLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate + xCoordinate, CurrentLocation.YCoordinate + yCoordinate);
+            if (newLocation != null)
+            {
+                CurrentLocation = newLocation;
+            }
+        }
+
+        public bool HasLocationNorth
+        {
+            get
+            {
+                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1) != null;
+            }
+        }
+
+        public bool HasLocationWest
+        {
+            get
+            {
+                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate) != null;
+            }
+        }
+
+        public bool HasLocationEast
+        {
+            get
+            {
+                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate) != null;
+            }
+        }
+
+        public bool HasLocationSouth
+        {
+            get
+            {
+                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1) != null;
+            }
         }
 
         public Player CurrentPlayer
@@ -22,6 +73,36 @@ namespace Engine.ViewModels
             {
                 return _currentPlayer;
             }
+        }
+
+        public Location CurrentLocation
+        {
+            get
+            {
+                return _currentLocation;
+            }
+            set
+            {
+                _currentLocation = value;
+                OnPropertyChange("CurrentLocation");
+                OnPropertyChange("HasLocationNorth");
+                OnPropertyChange("HasLocationEast");
+                OnPropertyChange("HasLocationWest");
+                OnPropertyChange("HasLocationSouth");
+            }
+        }
+
+        public World CurrentWorld
+        {
+            get
+            {
+                return _currentWorld;
+            }
+        }
+
+        protected virtual void OnPropertyChange(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
