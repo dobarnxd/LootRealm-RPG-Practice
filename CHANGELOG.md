@@ -11,6 +11,13 @@
 - Displaying the Player Object
 - Update Player data with the PropertyChanged event
 
-## Version 1.0.3 (2025-07-17)  
-- Creating the Location class
+## Version 1.0.3 (2025-07-17-19)  
+- Creating the Location class, it requires 5 data (x coordinate, y coordinate, name, description and image name)
 - Displaying the current location
+- Creating the World class to store, add and manage locations
+- Creating WorldFactory to manage worlds
+- Added buttons to be able to move in the game world
+
+## Version 1.0.4 (2025-07-19)
+- Creating a new BaseNotification class to update the property changes on UI
+- Making the WorldFactory static

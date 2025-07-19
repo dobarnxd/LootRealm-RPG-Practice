@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace Engine.Factories
 {
-    internal class WorldFactory
+    internal static class WorldFactory
     {
-        internal World CreateWorld()
+        internal static World CreateWorld()
         {
             World newWorld = new World();
             newWorld.AddLocation(0, -1, "Home", "This is your house", "Home.png");
