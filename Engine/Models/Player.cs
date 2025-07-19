@@ -14,7 +14,7 @@ namespace Engine.Models
         Rogue
     }
 
-    public class Player : INotifyPropertyChanged
+    public class Player : BaseNotification
     {
         private string _name;
         private readonly PlayerClass _characterClass;
@@ -23,8 +23,6 @@ namespace Engine.Models
         private uint _experiencePoints;
         private uint _level;
         private uint _gold;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public Player(string name, PlayerClass characterClass)
         {
@@ -85,7 +83,7 @@ namespace Engine.Models
             set
             {
                 _hitPoints = value;
-                OnPropertyChange("HitPoints");
+                OnPropertyChange(nameof(HitPoints));
             }
         }
 
@@ -98,7 +96,7 @@ namespace Engine.Models
             set
             {
                 _damage = value;
-                OnPropertyChange("Damage");
+                OnPropertyChange(nameof(Damage));
             }
         }
 
@@ -111,7 +109,7 @@ namespace Engine.Models
             set
             {
                 _experiencePoints = value;
-                OnPropertyChange("ExperiencePoints");
+                OnPropertyChange(nameof(ExperiencePoints));
             }
         }
 
@@ -124,7 +122,7 @@ namespace Engine.Models
             set
             {
                 _level = value;
-                OnPropertyChange("Level");
+                OnPropertyChange(nameof(Level));
             }
         }
 
@@ -137,13 +135,8 @@ namespace Engine.Models
             set
             {
                 _gold = value;
-                OnPropertyChange("Gold");
+                OnPropertyChange(nameof(Gold));
             }
-        }
-
-        protected virtual void OnPropertyChange(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

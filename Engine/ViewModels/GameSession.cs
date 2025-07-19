@@ -10,19 +10,16 @@ using System.Threading.Tasks;
 
 namespace Engine.ViewModels
 {
-    public class GameSession : INotifyPropertyChanged
+    public class GameSession : BaseNotification
     {
         private Player _currentPlayer;
         private Location _currentLocation;
         private World _currentWorld;
-        private WorldFactory _newWorldFactory;
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public GameSession()
         {
             _currentPlayer = new Player("Scott", PlayerClass.Warrior);
-            _newWorldFactory = new WorldFactory();
-            _currentWorld = _newWorldFactory.CreateWorld();
+            _currentWorld = WorldFactory.CreateWorld();
             _currentLocation = _currentWorld.LocationAt(0, -1);
         }
 
@@ -84,11 +81,11 @@ namespace Engine.ViewModels
             set
             {
                 _currentLocation = value;
-                OnPropertyChange("CurrentLocation");
-                OnPropertyChange("HasLocationNorth");
-                OnPropertyChange("HasLocationEast");
-                OnPropertyChange("HasLocationWest");
-                OnPropertyChange("HasLocationSouth");
+                OnPropertyChange(nameof(CurrentLocation));
+                OnPropertyChange(nameof(HasLocationNorth));
+                OnPropertyChange(nameof(HasLocationEast));
+                OnPropertyChange(nameof(HasLocationWest));
+                OnPropertyChange(nameof(HasLocationSouth));
             }
         }
 
@@ -98,11 +95,6 @@ namespace Engine.ViewModels
             {
                 return _currentWorld;
             }
-        }
-
-        protected virtual void OnPropertyChange(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
