@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Engine.Models;
+using Engine.Factories;
 
 namespace Engine.ViewModels
 {
@@ -11,11 +12,15 @@ namespace Engine.ViewModels
     {
         private Player _currentPlayer;
         private Location _currentLocation;
+        private World _currentWorld;
+        private WorldFactory _newWorldFactory;
 
         public GameSession()
         {
             _currentPlayer = new Player("Scott", PlayerClass.Warrior);
-            _currentLocation = new Location();
+            _newWorldFactory = new WorldFactory();
+            _currentWorld = _newWorldFactory.CreateWorld();
+            _currentLocation = _currentWorld.LocationAt(0, -1);
         }
 
         public Player CurrentPlayer

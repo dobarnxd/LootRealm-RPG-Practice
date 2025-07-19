@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Engine.Models
 {
@@ -14,13 +15,18 @@ namespace Engine.Models
         private string _description;
         private string _imageName;
 
-        public Location()
+        public Location(int xCoordinate, int yCoordinate, string name, string description, string imageName)
         {
-            _name = "Home";
-            _xCoordinate = 0;
-            _yCoordinate = -1;
-            _description = "This is your house";
-            _imageName = "/Engine;component/Images/Locations/Home.png";
+            if (string.IsNullOrWhiteSpace(imageName) || string.IsNullOrWhiteSpace(description) || string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException();
+            }
+
+            _name = name;
+            _xCoordinate = xCoordinate;
+            _yCoordinate = yCoordinate;
+            _description = description;
+            _imageName = "/Engine;component/Images/Locations/" + imageName;
         }
 
         public int XCoordinate
@@ -55,6 +61,10 @@ namespace Engine.Models
             }
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException();
+                }
                 _name = value;
             }
         }
@@ -67,6 +77,10 @@ namespace Engine.Models
             }
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException();
+                }
                 _description = value;
             }
         }
@@ -79,6 +93,10 @@ namespace Engine.Models
             }
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException();
+                }
                 _imageName = value;
             }
         }
