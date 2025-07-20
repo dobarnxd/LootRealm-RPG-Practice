@@ -21,3 +21,10 @@
 ## Version 1.0.4 (2025-07-19)
 - Creating a new BaseNotification class to update the property changes on UI
 - Making the WorldFactory static
+
+## Version 1.0.5 (2025-07-20)
+- Created GameItem class and Weapon class that inherits GameItem
+- Added input validation for GameItem and Weapon constructors and properties
+- Created ItemFactory to create standard items
+- Improved ToString() method in Weapon and GameItem for clearer output
+- Displaying the inventory

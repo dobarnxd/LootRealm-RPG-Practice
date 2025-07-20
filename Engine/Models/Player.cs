@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Engine.Factories;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,14 +25,27 @@ namespace Engine.Models
         private uint _experiencePoints;
         private uint _level;
         private uint _gold;
+        private ObservableCollection<GameItem> _inventory;
 
         public Player(string name, PlayerClass characterClass)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("The NAME can't be null, empty or only whitespace.");
+            }
+
+            if (characterClass == null)
+            {
+                throw new ArgumentException("The CHARCTER CLASS can't be null.");
+            }
             _name = name;
             _characterClass = characterClass;
             _experiencePoints = 0;
             _level = 1;
             _gold = 10;
+            _inventory = new ObservableCollection<GameItem>();
+            _inventory.Add(ItemFactory.CreateGameItem(1001));
+
             if (_characterClass == PlayerClass.Warrior)
             {
                 _damage = 10;
@@ -49,6 +64,19 @@ namespace Engine.Models
                 _hitPoints = 90;
             }
         }
+
+        public ObservableCollection<GameItem> Inventory
+        {
+            get
+            {
+                return _inventory;
+            }
+            set
+            {
+                _inventory = value;
+            }
+        }
+
 
         public string Name
         {
